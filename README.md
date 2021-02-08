@@ -105,9 +105,9 @@ Complete the following steps to build the Flask applicaiton container on your lo
    }
    ```
 
-   This congiguration forwards all requests to the "flask" server. The hostname and port of the Flask server are provided as environmental variables when the containers are run. 
+   This configuration forwards all requests to the upstream "flask" server. The hostname and port of the Flask server are provided as environmental variables when the containers are run. 
 
-   The Dockerfile for the Nginx reverse proxy uses the master Nginx alpine image and simply copies the configuration file to the appropriate directory.
+   The Dockerfile for the Nginx reverse proxy uses the master Nginx alpine image and simply copies the nginx.conf configuration file to the appropriate directory.
 
    ```
    FROM nginx:1.19-alpine
@@ -127,7 +127,7 @@ Complete the following steps to build the Nginx reverse proxy container on your 
    ```
    docker-compose up --build
    ```
-3. Both the Flask application and Nginx reverse proxy containers will be run. The Nginx server will listent for requests on port 80 and forward them to the Flask application. Browse to http://localhost or use “curl” from the command line and you will see “Hello, World!”.
+3. Both the Flask application and Nginx reverse proxy containers will be run. The Nginx server listens for requests on port 80 and forwards them to the Flask application. Browse to http://localhost or use “curl” from the command line and you will see “Hello, World!”.
    
    ```
    curl localhost
@@ -137,7 +137,7 @@ Complete the following steps to build the Nginx reverse proxy container on your 
 
 ## 6. Create a container service
 
-Complete the following steps to create the Lightsail container service using the AWS CLI, and then push your local container images to your new container service using the Lightsail control (lightsailctl) plugin.
+Complete the following steps to create the Lightsail container service and then push your local container images to the new container service.
 
 1. Create a Lightsail container service with the [create-container-service](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lightsail/create-container-service.html) command.
    
@@ -165,7 +165,7 @@ Complete the following steps to create the Lightsail container service using the
    
    Wait until the container service state changes to “ACTIVE” before continuing to the next step. Your container service should become active after a few minutes.
 
-2. Push the Flask application container to Lightsail with the [push-container-image](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lightsail/push-container-image.html) comand.
+2. Push the Flask application container to Lightsail with the [push-container-image](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lightsail/push-container-image.html) command.
    ```
    aws lightsail push-container-image --service-name sample-service \
    --label flask-container \
@@ -177,7 +177,7 @@ Complete the following steps to create the Lightsail container service using the
    ```
    Note: the X in ":sample-service.flask-container.X" will be a numeric value. If this is the first time you’ve pushed an image to your container service, this number will be 1. You will need this number in the next step.
 
-3. Nginx reverse proxy container to Lightsail with the [push-container-image](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lightsail/push-container-image.html) comand.
+3. Push the Nginx reverse proxy container to Lightsail with the [push-container-image](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lightsail/push-container-image.html) command.
    aws lightsail push-container-image --service-name sample-service \
    --label nginx-container \
    --image nginx-container
@@ -192,7 +192,7 @@ Complete the following steps to create the Lightsail container service using the
 
 Complete the following steps to create deployment and public endpoint configuration JSON files, and then deploy your container images to your container service.
 
-1. Create a new file, containers.json. Edit the file and add the following. Replace the X in ":sample-service.flask-container.X" with the numeric value from the previous step. Save the file.
+1. Create a new file, containers.json. Edit the file and add the following. Replace the X in ":sample-service.flask-container.X" and the Y in ":sample-service.nginx-container.Y" with the numeric values from the previous step. Save the file.
    ```
    {
       "sample-nginx": {
@@ -216,7 +216,7 @@ Complete the following steps to create deployment and public endpoint configurat
    }
 
    ```
-   The containers.json file describes the settings of the containers that will be launched on the container service. In this instance, the containers.json file describes the nginx and flask containers, the images they will use and the ports they will expose. In addition, environmental variables that specify the Flask host and port are provided. At runtime, Nginx will replace the placeholders in the nginx.conf file with those provided here.
+   The containers.json file describes the settings of the containers that will be launched on the container service. In this instance, the containers.json file describes both the Nginx and Flask containers, the images the containers will use and the ports the containers will expose. In addition, environmental variables that specify the Flask host and port are provided. At runtime Nginx will replace the placeholder values in the nginx.conf file with the actual values provided here.
 
 2. Create a new file, public-endpoint.json. Edit the file and add the following. Save the file.
    ```
@@ -234,7 +234,7 @@ Complete the following steps to create deployment and public endpoint configurat
    --containers file://containers.json \
    --public-endpoint file://public-endpoint.json
    ```
-   The output of the create-container-servicedeployment command indicates that the state of the container service is now "DEPLOYING".
+   The output of the ```create-container-service-deployment``` command indicates that the state of the container service is now "DEPLOYING".
    ```
    {
        "containerServices": [{
