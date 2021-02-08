@@ -12,7 +12,7 @@ To get started, you'll need an [AWS account](https://portal.aws.amazon.com/billi
 
 2. Change to the project directory
    ```bash
-   cd lightsail-containers-flask
+   cd lightsail-containers-nginx
    ```
 
 ## 2. The Flask application
