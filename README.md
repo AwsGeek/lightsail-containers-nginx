@@ -16,9 +16,9 @@ To get started, you'll need an [AWS account](https://portal.aws.amazon.com/billi
    ```
 
 ## 2. The Flask application
-   The Flask application contains a single hello_world() function that is triggered when the route "/" is requested. When run, this application binds to all IPs on the system ("0.0.0.0") and listens on port 5000 (this is the default Flask port).
+   The Flask application contains a single ```hello_world()``` function that is triggered when the route ```/``` is requested. When run, this application binds to all IPs on the system ("0.0.0.0") and listens on port 5000 (this is the default Flask port).
 
-   The source for the Flask application, app.py, is shown below.
+   The source for the Flask application, ```app.py```, is shown below.
 
    ```python
    from flask import Flask
@@ -32,7 +32,7 @@ To get started, you'll need an [AWS account](https://portal.aws.amazon.com/billi
       app.run(host="0.0.0.0", port=5000)
    ```
 
-   The Dockerfile for the Flask application uses a Python alpine image to minimize container image size. The command to run when the container starts is the same as if run from the command line: python app.py
+   The Dockerfile for the Flask application uses a Python alpine image to minimize container image size. The command to run when the container starts is the same as if run from the command line: ```python app.py```
 
    ```
    # Set base image (host OS)
@@ -65,13 +65,13 @@ Complete the following steps to build the Flask applicaiton container on your lo
    ```
    docker build -t flask-container ./flask
    ```
-   This command builds a container using the Dockerfile in the current directory and tags the container "flask-container".
+   This command builds a container using the Dockerfile in the current directory and tags the container ```flask-container```.
 
 2. Once the container build is done, test the Flask application locally by running the container:
    ```
    docker run -p 5000:5000 flask-container
    ```
-3. The Flask app will run in the container and will be exposed to your local system on port 5000. Browse to http://localhost:5000 or use “curl” from the command line and you will see “Hello, World!”.
+3. The Flask app will run in the container and will be exposed to your local system on port 5000. Browse to http://localhost:5000 or use ```curl``` from the command line and you will see ```Hello, World!```
    
    ```
    curl localhost:5000
@@ -81,7 +81,7 @@ Complete the following steps to build the Flask applicaiton container on your lo
 
 ## 4. The Nginx reverse proxy
 
-   The Nginx reverse proxy forwards all requests to the Flask application on port 5000. Configuring Nginx to forward reqests reuqires a simple configuration file, nginx.conf:
+   The Nginx reverse proxy forwards all requests to the Flask application on port 5000. Configuring Nginx to forward reqests reuqires a simple configuration file, ```nginx.conf```:
 
    ```
    events {}
@@ -105,9 +105,9 @@ Complete the following steps to build the Flask applicaiton container on your lo
    }
    ```
 
-   This configuration forwards all requests to the upstream "flask" server. The hostname and port of the Flask server are provided as environmental variables when the containers are run. 
+   This configuration forwards all requests to the upstream Flask server. The hostname and port of the Flask server are provided as environmental variables when the containers are run. 
 
-   The Dockerfile for the Nginx reverse proxy uses the master Nginx alpine image and simply copies the nginx.conf configuration file to the appropriate directory.
+   The ```Dockerfile``` for the Nginx reverse proxy uses the master Nginx alpine image and simply copies the ```nginx.conf``` configuration file to the appropriate directory.
 
    ```
    FROM nginx:1.19-alpine
@@ -121,13 +121,13 @@ Complete the following steps to build the Nginx reverse proxy container on your 
    ```
    docker build -t nginx-container ./nginx
    ```
-   This command builds a container using the Dockerfile in the current directory and tags the container "nginx-container".
+   This command builds a container using the Dockerfile in the current directory and tags the container ```nginx-container```.
 
 2. Once the container build is done, test the Nginx proxy and Flask application locally by running the container:
    ```
    docker-compose up --build
    ```
-3. Both the Flask application and Nginx reverse proxy containers will be run. The Nginx server listens for requests on port 80 and forwards them to the Flask application. Browse to http://localhost or use “curl” from the command line and you will see “Hello, World!”.
+3. Both the Flask application and Nginx reverse proxy containers will be run. The Nginx server listens for requests on port 80 and forwards them to the Flask application. Browse to http://localhost or use ```curl``` from the command line and you will see ```Hello, World!```.
    
    ```
    curl localhost
@@ -148,7 +148,7 @@ Complete the following steps to create the Lightsail container service and then 
    ```
    The power and scale parameters specify the capacity of the container service. For the purposes of this guide, little capacity is required.
 
-   The output of the create-container-service command indicates the state of the new service is "PENDING".
+   The output of the create-container-service command indicates the state of the new service is ```PENDING```.
    ```
    {
        "containerService": {
@@ -163,7 +163,7 @@ Complete the following steps to create the Lightsail container service and then 
    aws lightsail get-container-services --service-name sample-service
    ```
    
-   Wait until the container service state changes to “ACTIVE” before continuing to the next step. Your container service should become active after a few minutes.
+   Wait until the container service state changes to ```ACTIVE``` before continuing to the next step. Your container service should become active after a few minutes.
 
 2. Push the Flask application container to Lightsail with the [push-container-image](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lightsail/push-container-image.html) command.
    ```
@@ -175,7 +175,7 @@ Complete the following steps to create the Lightsail container service and then 
 
    Refer to this image as ":sample-service.flask-container.X" in deployments.
    ```
-   Note: the X in ":sample-service.flask-container.X" will be a numeric value. If this is the first time you’ve pushed an image to your container service, this number will be 1. You will need this number in the next step.
+   Note: the ```X``` in ```sample-service.flask-container.X``` will be a numeric value. If this is the first time you’ve pushed an image to your container service, this number will be 1. You will need this number in the next step.
 
 3. Push the Nginx reverse proxy container to Lightsail with the [push-container-image](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lightsail/push-container-image.html) command.
    aws lightsail push-container-image --service-name sample-service \
@@ -186,13 +186,13 @@ Complete the following steps to create the Lightsail container service and then 
 
    Refer to this image as ":sample-service.nginx-container.Y" in deployments.
    ```
-   Note: the Y in ":sample-service.nginx-container.Y" will be a numeric value. If this is the first time you’ve pushed an image to your container service, this number will be 1. You will need this number in the next step.
+   Note: the ```Y``` in ```:sample-service.nginx-container.Y``` will be a numeric value. If this is the first time you’ve pushed an image to your container service, this number will be 1. You will need this number in the next step.
 
 ## 7. Deploy the containers
 
 Complete the following steps to create deployment and public endpoint configuration JSON files, and then deploy your container images to your container service.
 
-1. Create a new file, containers.json. Edit the file and add the following. Replace the X in ":sample-service.flask-container.X" and the Y in ":sample-service.nginx-container.Y" with the numeric values from the previous step. Save the file.
+1. Create a new file, ```containers.json```. Edit the file and add the following. Replace the ```X``` in ```:sample-service.flask-container.X``` and the ```Y``` in ```:sample-service.nginx-container.Y``` with the numeric values from the previous step. Save the file.
    ```
    {
       "sample-nginx": {
@@ -216,16 +216,16 @@ Complete the following steps to create deployment and public endpoint configurat
    }
 
    ```
-   The containers.json file describes the settings of the containers that will be launched on the container service. In this instance, the containers.json file describes both the Nginx and Flask containers, the images the containers will use and the ports the containers will expose. In addition, environmental variables that specify the Flask host and port are provided. At runtime Nginx will replace the placeholder values in the nginx.conf file with the actual values provided here.
+   The ```containers.json``` file describes the settings of the containers that will be launched on the container service. In this instance, the containers.json file describes both the Nginx and Flask containers, the images the containers will use and the ports the containers will expose. In addition, environmental variables that specify the Flask host and port are provided. At runtime Nginx will replace the placeholder values in the nginx.conf file with the actual values provided here.
 
-2. Create a new file, public-endpoint.json. Edit the file and add the following. Save the file.
+2. Create a new file, ```public-endpoint.json```. Edit the file and add the following. Save the file.
    ```
    {
        "containerName": "sample-nginx",
        "containerPort": 80
    }
    ```
-   The public-endpoint.json file describes the settings of the public endpoint for the container service. In this instance, the public-endpoint.json file indicates the Nginx container will expose port 80. Public endpoint settings are only required for services that require public access.
+   The ```public-endpoint.json``` file describes the settings of the public endpoint for the container service. In this instance, the public-endpoint.json file indicates the Nginx container will expose port 80. Public endpoint settings are only required for services that require public access.
 
 3. Deploy the containers to the container service with the AWS CLI using the [create-container-service-deployment](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lightsail/create-container-service-deployment.html) command.
 
@@ -234,7 +234,7 @@ Complete the following steps to create deployment and public endpoint configurat
    --containers file://containers.json \
    --public-endpoint file://public-endpoint.json
    ```
-   The output of the ```create-container-service-deployment``` command indicates that the state of the container service is now "DEPLOYING".
+   The output of the ```create-container-service-deployment``` command indicates that the state of the container service is now ```DEPLOYING```.
    ```
    {
        "containerServices": [{
@@ -242,13 +242,13 @@ Complete the following steps to create deployment and public endpoint configurat
            ...
            "state": "DEPLOYING",
    ```
-   Use the [get-container-services](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lightsail/get-container-services.html) command to monitor the state of the container until it changes to "RUNNING" before continuing to the next step.
+   Use the [get-container-services](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lightsail/get-container-services.html) command to monitor the state of the container until it changes to ```RUNNING``` before continuing to the next step.
    
    ```
    aws lightsail get-container-services --service-name sample-service
    ```
    
-   The get-container-service command also returns the endpoint URL for container service.
+   The ```get-container-service``` command also returns the endpoint URL for container service.
    
    ```
    {
@@ -259,7 +259,7 @@ Complete the following steps to create deployment and public endpoint configurat
            ...
            "url": "https://sample-service...
    ```
-   After the container service state changes to "RUNNING", navigate to this URL in your browser to verify your container service is running properly. Your browser output should show "Hello, World!" as before.
+   After the container service state changes to ```RUNNING```, navigate to this URL in your browser to verify your container service is running properly. Your browser output should show "Hello, World!" as before.
 
    Congratulations. You have successfully deployed a containerized Nginx reverse proxy and Flask application using Amazon Lightsail containers.
 
@@ -271,7 +271,7 @@ To cleanup and delete Lightsail resources, use the [delete-container-service](ht
 ```
 aws lightsail delete-container-service --service-name sample-service
 ```
-The delete-container-service removes the container service, any associated container deployments, and container images.
+The ```delete-container-service``` removes the container service, any associated container deployments, and container images.
 
 ## Additional Resources
 The source code for this guide and this documentation is located in this [GitHub repository](https://github.com/AwsGeek/lightsail-containers-nginxq)
