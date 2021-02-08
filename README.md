@@ -65,9 +65,9 @@ Complete the following steps to build the Flask applicaiton container on your lo
    ```
    docker build -t flask-container ./flask
    ```
-2. This command builds a container using the Dockerfile in the current directory and tags the container "flask-container".
+   This command builds a container using the Dockerfile in the current directory and tags the container "flask-container".
 
-   Once the container build is done, test the Flask application locally by running the container:
+2. Once the container build is done, test the Flask application locally by running the container:
    ```
    docker run -p 5000:5000 flask-container
    ```
@@ -81,7 +81,7 @@ Complete the following steps to build the Flask applicaiton container on your lo
 
 ## 4. The Nginx reverse proxy
 
-   The Nginx reverse proxy forwards all requests to the Flask application on port 5000. Configuring Nginx to forward reqests reuqires a simple configuration file, nginx.comf:
+   The Nginx reverse proxy forwards all requests to the Flask application on port 5000. Configuring Nginx to forward reqests reuqires a simple configuration file, nginx.conf:
 
    ```
    events {}
