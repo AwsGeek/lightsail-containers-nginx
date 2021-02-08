@@ -178,6 +178,7 @@ Complete the following steps to create the Lightsail container service and then 
    Note: the ```X``` in ```sample-service.flask-container.X``` will be a numeric value. If this is the first time you’ve pushed an image to your container service, this number will be 1. You will need this number in the next step.
 
 3. Push the Nginx reverse proxy container to Lightsail with the [push-container-image](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lightsail/push-container-image.html) command.
+   ```
    aws lightsail push-container-image --service-name sample-service \
    --label nginx-container \
    --image nginx-container
