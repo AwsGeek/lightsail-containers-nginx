@@ -79,6 +79,8 @@ Complete the following steps to build the Flask applicaiton container on your lo
    Hello, World!
    ```
 
+   To stop the container, type 'CTRL+C'
+
 ## 4. The Nginx reverse proxy
 
    The Nginx reverse proxy forwards all requests to the Flask application on port 5000. Configuring Nginx to forward reqests reuqires a simple configuration file, ```nginx.conf```:
@@ -113,6 +115,7 @@ Complete the following steps to build the Flask applicaiton container on your lo
    FROM nginx:1.19-alpine
    COPY ./nginx.conf /etc/nginx/templates/nginx.conf.template
    ```
+   
 ## 5. Build the Nginx container
 
 Complete the following steps to build the Nginx reverse proxy container on your local system.
@@ -123,7 +126,7 @@ Complete the following steps to build the Nginx reverse proxy container on your 
    ```
    This command builds a container using the Dockerfile in the current directory and tags the container ```nginx-container```.
 
-2. Once the container build is done, test the Nginx proxy and Flask application locally by running the container:
+2. After the container build is done, test the Nginx proxy and Flask application locally by running the container:
    ```
    docker-compose up --build
    ```
@@ -134,6 +137,8 @@ Complete the following steps to build the Nginx reverse proxy container on your 
    
    Hello, World!
    ```
+
+   To stop the containers, type 'CTRL+C'
 
 ## 6. Create a container service
 
