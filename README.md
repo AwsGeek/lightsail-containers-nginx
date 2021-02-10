@@ -79,7 +79,7 @@ Complete the following steps to build the Flask applicaiton container on your lo
    Hello, World!
    ```
 
-   To stop the container, type 'CTRL+C'
+   To stop the container, type ```CTRL+C```
 
 ## 4. The Nginx reverse proxy
 
@@ -138,7 +138,7 @@ Complete the following steps to build the Nginx reverse proxy container on your 
    Hello, World!
    ```
 
-   To stop the containers, type 'CTRL+C'
+   To stop the containers, type ```CTRL+C```
 
 ## 6. Create a container service
 
