@@ -1,7 +1,6 @@
 {
     "nginx": {
         "image": ":sample-service.nginx-container.4",
-        "command": [],
         "ports": {
             "80": "HTTP"
         },
@@ -13,8 +12,12 @@
     },
     "flask": {
         "image": ":sample-service.flask-container.2",
+        "command": ["flask run --host 0.0.0.0"],
         "ports": {
             "5000": "HTTP"
+        },
+        "environment": {
+            "FLASK_APP": "app.py"
         }
     }
 }
